@@ -42,7 +42,7 @@ public class DeliveryDateChangeTests {
         $("[data-test-id='success-notification']")
                 .shouldBe(visible, Duration.ofSeconds(15))
                 .shouldHave(text("Успешно!"))
-                .shouldHave(text(firstDateOfMeeting));
+                .shouldHave(text("Встреча успешно запланирована на " + firstDateOfMeeting));
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE );
         $("[data-test-id='date'] input").setValue(secondDateOfMeeting);
         $(byText("Запланировать")).click();
