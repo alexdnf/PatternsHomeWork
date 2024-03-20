@@ -56,7 +56,7 @@ public class DataGenerator {
         if (surname.contains("ё")) {
             surname = surname.replace("ё","е");
         }
-        return firstName + " " + surname;
+        return surname + " " + firstName;
     }
 
     public static String generatePhone(String local) {

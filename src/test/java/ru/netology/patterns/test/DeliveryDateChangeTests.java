@@ -1,7 +1,5 @@
 package ru.netology.patterns.test;
 
-import com.codeborne.selenide.selector.ByText;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +7,6 @@ import org.openqa.selenium.Keys;
 import ru.netology.patterns.data.DataGenerator;
 
 import java.time.Duration;
-import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
