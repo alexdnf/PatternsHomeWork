@@ -5,6 +5,8 @@ import lombok.Value;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -16,9 +18,8 @@ public class DataGenerator {
         return LocalDate.now().plusDays(shift).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
-    public static String generateCity(String local) {
-        Faker faker = new Faker(new Locale("ru"));
-        String[] cities = {
+    public static String generateCity() {
+        List<String> cities = Arrays.asList(
                 "Москва", "Тверь", "Смоленкс", "Калуга", "Брянск",
                 "Тула", "Орел", "Рязань", "Владимир", "Иваново",
                 "Кострома", "Ярославль", "Курск",
@@ -38,14 +39,14 @@ public class DataGenerator {
                 "Кызыл", "Иркутск", "Улан-Удэ",
                 "Чита", "Якутск", "Магадан", "Анадырь", "Петропавловск-Камчатский",
                 "Благовещенск", "Биробиджан", "Хабаровск", "Владивосток", "Южно-Сахалинск"
-        };
+        );
 
         Random random = new Random();
-        int randomIndex = random.nextInt(cities.length);
-        return cities[randomIndex];
+        int randomIndex = random.nextInt(cities.size());
+        return cities.get(randomIndex);
     }
 
-    public static String generateName(String local) {
+    public static String generateName() {
         Faker faker = new Faker(new Locale("ru"));
         String firstName = faker.name().firstName();
         String surname = faker.name().lastName();
@@ -59,7 +60,7 @@ public class DataGenerator {
         return surname + " " + firstName;
     }
 
-    public static String generatePhone(String local) {
+    public static String generatePhone() {
         Faker faker = new Faker(new Locale("ru"));
         return faker.phoneNumber().phoneNumber();
     }
@@ -67,12 +68,11 @@ public class DataGenerator {
     public static class Registration {
         private Registration() {
         }
-        public static UserInfo generateUser(String local) {
-            Faker faker = new Faker(new Locale("ru"));
+        public static UserInfo generateUser() {
             return new UserInfo(
-                    DataGenerator.generateCity("ru"),
-                    DataGenerator.generateName("ru"),
-                    DataGenerator.generatePhone("ru")
+                    DataGenerator.generateCity(),
+                    DataGenerator.generateName(),
+                    DataGenerator.generatePhone()
             );
         };
 
