@@ -46,18 +46,48 @@ public class DataGenerator {
         return cities.get(randomIndex);
     }
 
+    public static String generateWrongCitySmallTown() {
+        return generateCity() + "ово";
+    }
+
+    public static String generateWrongCityNumbers() {
+        return generateCity() + "123";
+    }
+
+    public static String generateWrongCitySymbols() {
+        return generateCity() + "???";
+    }
+    public static String generateWrongCityWithLatinLetters() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.address().cityName();
+    }
+
     public static String generateName() {
         Faker faker = new Faker(new Locale("ru"));
         String firstName = faker.name().firstName();
         String surname = faker.name().lastName();
 
-        if (firstName.contains("ё")) {
-            firstName = firstName.replace("ё","е");
-        }
-        if (surname.contains("ё")) {
-            surname = surname.replace("ё","е");
-        }
-        return surname + " " + firstName;
+        return (surname + " " + firstName).replace("ё", "е");
+    }
+
+    public static String generateValidNameWithRusLetter() {
+        Faker faker = new Faker(new Locale("ru"));
+        String firstName = faker.name().firstName();
+        String surname = faker.name().lastName();
+
+        return surname + "ё" + " " + firstName;
+    }
+
+    public static String generateWrongNameWithNumbers() {
+        return generateName() + "123";
+    }
+
+    public static String generateWrongNameWithSymbols() {
+        return generateName() + "?/,-";
+    }
+    public static String generateWrongNameWithLatinLetters() {
+        Faker faker = new Faker(new Locale("en"));
+        return faker.name().fullName();
     }
 
     public static String generatePhone() {
@@ -68,19 +98,21 @@ public class DataGenerator {
     public static class Registration {
         private Registration() {
         }
+
         public static UserInfo generateUser() {
             return new UserInfo(
                     DataGenerator.generateCity(),
                     DataGenerator.generateName(),
                     DataGenerator.generatePhone()
             );
-        };
-
-        @Value
-        public static class UserInfo {
-            String city;
-            String name;
-            String phone;
         }
+
+    }
+
+    @Value
+    public static class UserInfo {
+        String city;
+        String name;
+        String phone;
     }
 }

@@ -1,6 +1,5 @@
 package ru.netology.patterns.test;
 
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,7 +7,6 @@ import org.openqa.selenium.Keys;
 import ru.netology.patterns.data.DataGenerator;
 
 import java.time.Duration;
-import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
@@ -61,12 +59,12 @@ public class DeliveryDateChangeTests {
         var firstDateOfMeeting = DataGenerator.generateDate(daysToAddForMeeting);
         var daysToAddForSecondMeeting = 7;
         var secondDateOfMeeting = DataGenerator.generateDate(daysToAddForSecondMeeting);
-
+        var validNameWithRusLetter = DataGenerator.generateValidNameWithRusLetter();
 
         $("[data-test-id=city] input").setValue(validUser.getCity());
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         $("[data-test-id='date'] input").setValue(firstDateOfMeeting);
-        $("[data-test-id='name'] input").setValue("Артём Иванов");
+        $("[data-test-id='name'] input").setValue(validNameWithRusLetter);
         $("[data-test-id='phone'] input").setValue(validUser.getPhone());
         $("[data-test-id='agreement']").click();
         $(byText("Запланировать")).click();
@@ -93,8 +91,9 @@ public class DeliveryDateChangeTests {
         var validUser = DataGenerator.Registration.generateUser();
         var daysToAddForMeeting = 4;
         var firstDateOfMeeting = DataGenerator.generateDate(daysToAddForMeeting);
+        var wrongCity = DataGenerator.generateWrongCitySmallTown();
 
-        $("[data-test-id=city] input").setValue(validUser.getCity() + " ово");
+        $("[data-test-id=city] input").setValue(wrongCity);
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         $("[data-test-id='date'] input").setValue(firstDateOfMeeting);
         $("[data-test-id='name'] input").setValue(validUser.getName());
@@ -126,9 +125,9 @@ public class DeliveryDateChangeTests {
         var validUser = DataGenerator.Registration.generateUser();
         var daysToAddForMeeting = 4;
         var firstDateOfMeeting = DataGenerator.generateDate(daysToAddForMeeting);
-        Faker faker = new Faker(new Locale("en"));
+        var wrongCity = DataGenerator.generateWrongCityWithLatinLetters();
 
-        $("[data-test-id=city] input").setValue(faker.address().cityName());
+        $("[data-test-id=city] input").setValue(wrongCity);
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         $("[data-test-id='date'] input").setValue(firstDateOfMeeting);
         $("[data-test-id='name'] input").setValue(validUser.getName());
@@ -144,8 +143,9 @@ public class DeliveryDateChangeTests {
         var validUser = DataGenerator.Registration.generateUser();
         var daysToAddForMeeting = 4;
         var firstDateOfMeeting = DataGenerator.generateDate(daysToAddForMeeting);
+        var wrongCity = DataGenerator.generateWrongCityNumbers();
 
-        $("[data-test-id=city] input").setValue(validUser.getCity() + "123");
+        $("[data-test-id=city] input").setValue(wrongCity);
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         $("[data-test-id='date'] input").setValue(firstDateOfMeeting);
         $("[data-test-id='name'] input").setValue(validUser.getName());
@@ -161,8 +161,9 @@ public class DeliveryDateChangeTests {
         var validUser = DataGenerator.Registration.generateUser();
         var daysToAddForMeeting = 4;
         var firstDateOfMeeting = DataGenerator.generateDate(daysToAddForMeeting);
+        var wrongCity = DataGenerator.generateWrongCitySymbols();
 
-        $("[data-test-id=city] input").setValue(validUser.getCity() + "??");
+        $("[data-test-id=city] input").setValue(wrongCity);
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         $("[data-test-id='date'] input").setValue(firstDateOfMeeting);
         $("[data-test-id='name'] input").setValue(validUser.getName());
@@ -243,12 +244,12 @@ public class DeliveryDateChangeTests {
         var validUser = DataGenerator.Registration.generateUser();
         var daysToAddForMeeting = 4;
         var firstDateOfMeeting = DataGenerator.generateDate(daysToAddForMeeting);
-        Faker faker = new Faker(new Locale("en"));
+        var wrongName = DataGenerator.generateWrongNameWithLatinLetters();
 
         $("[data-test-id=city] input").setValue(validUser.getCity());
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         $("[data-test-id='date'] input").setValue(firstDateOfMeeting);
-        $("[data-test-id='name'] input").setValue(faker.name().fullName());
+        $("[data-test-id='name'] input").setValue(wrongName);
         $("[data-test-id='phone'] input").setValue(validUser.getPhone());
         $("[data-test-id='agreement']").click();
         $(byText("Запланировать")).click();
@@ -260,11 +261,12 @@ public class DeliveryDateChangeTests {
         var validUser = DataGenerator.Registration.generateUser();
         var daysToAddForMeeting = 4;
         var firstDateOfMeeting = DataGenerator.generateDate(daysToAddForMeeting);
+        var wrongName = DataGenerator.generateWrongNameWithNumbers();
 
         $("[data-test-id=city] input").setValue(validUser.getCity());
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         $("[data-test-id='date'] input").setValue(firstDateOfMeeting);
-        $("[data-test-id='name'] input").setValue(validUser.getName() + "123");
+        $("[data-test-id='name'] input").setValue(wrongName);
         $("[data-test-id='phone'] input").setValue(validUser.getPhone());
         $("[data-test-id='agreement']").click();
         $(byText("Запланировать")).click();
@@ -272,16 +274,17 @@ public class DeliveryDateChangeTests {
     }
 
     @Test
-    @DisplayName("Should not send form with wrong name numbers")
+    @DisplayName("Should not send form with wrong name symbols")
     void wrongSymbolsNameTest() {
         var validUser = DataGenerator.Registration.generateUser();
         var daysToAddForMeeting = 4;
         var firstDateOfMeeting = DataGenerator.generateDate(daysToAddForMeeting);
+        var wrongName = DataGenerator.generateWrongNameWithSymbols();
 
         $("[data-test-id=city] input").setValue(validUser.getCity());
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         $("[data-test-id='date'] input").setValue(firstDateOfMeeting);
-        $("[data-test-id='name'] input").setValue(validUser.getName() + "??");
+        $("[data-test-id='name'] input").setValue(wrongName);
         $("[data-test-id='phone'] input").setValue(validUser.getPhone());
         $("[data-test-id='agreement']").click();
         $(byText("Запланировать")).click();
