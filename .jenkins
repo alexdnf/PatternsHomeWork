@@ -1,0 +1,26 @@
+pipeline {
+ agent any
+ stages {
+ stage('Checkout') {
+ steps {
+ git branch: 'main', url: 'https://github.com/alexdnf/PatternsHomeWork'
+ }
+ }
+ stage('Start') {
+ steps {
+ sh 'java -jar ./artifacts/app-replan-delivery.jar &'
+ }
+ }
+ stage('Build') {
+ steps {
+ sh 'gradle clean build'
+ }
+ }
+ stage('Test') {
+ steps {
+ sh 'gradle test'
+ }
+ }
+
+ }
+}
